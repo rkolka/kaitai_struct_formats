@@ -1423,6 +1423,24 @@ enums:
       doc-ref:
         - https://gitlab.com/gnutools/binutils-gdb/-/blob/4ffb22ec40/include/elf/common.h#L356
         - https://groups.google.com/g/generic-abi/c/n8tLQxj02YY
+    260:
+      id: u16_u8core
+      -orig-id: EM_U16_U8CORE
+      doc: LAPIS nX-U16/U8
+      doc-ref:
+        - https://gitlab.com/gnutools/binutils-gdb/-/blob/dfbcbf85ea/include/elf/common.h#L357
+    261:
+      id: tachyum
+      -orig-id: EM_TACHYUM
+      doc: Tachyum
+      doc-ref:
+        - https://gitlab.com/gnutools/binutils-gdb/-/blob/dfbcbf85ea/include/elf/common.h#L358
+    262:
+      id: nxp_56800ef
+      -orig-id: EM_56800EF
+      doc: NXP 56800EF Digital Signal Controller (DSC)
+      doc-ref:
+        - https://gitlab.com/gnutools/binutils-gdb/-/blob/dfbcbf85ea/include/elf/common.h#L359
     # unofficial values
     # https://gitlab.com/gnutools/binutils-gdb/-/blob/4ffb22ec40/include/elf/common.h#L358
     0x1057:
@@ -1795,7 +1813,7 @@ enums:
     0x60000011: sunw_symtab
     0x60000012: sunw_symsz
     # 0x60000013: sunw_encoding  # DT_* encoding rules apply again for values
-                                 # `v >= ::sunw_encoding and v < ::hi_os` (see
+                                 # `v >= ::sunw_encoding and v <= ::hi_os` (see
                                  # `::encoding` description)
     0x60000013: sunw_sortent
     0x60000014: sunw_symsort
@@ -1823,7 +1841,7 @@ enums:
     0x60000032: sunw_symnsort
     0x60000033: sunw_symnsortsz
     # 0x6ffff000: hi_os
-    # 0x6ffffd00: val_rng_lo  # Values `v >= ::val_rng_lo and v < ::val_rng_hi`
+    # 0x6ffffd00: val_rng_lo  # Values `v >= ::val_rng_lo and v <= ::val_rng_hi`
                               # use the 'd_val' field of the dynamic structure
     0x6ffffdf4:
       id: gnu_flags_1
@@ -1840,7 +1858,7 @@ enums:
     0x6ffffdfe: syminsz         # Size of syminfo table (in bytes)
     0x6ffffdff: syminent        # Entry size of syminfo
     # 0x6ffffdff: val_rng_hi
-    # 0x6ffffe00: addr_rng_lo  # Values `v >= ::addr_rng_lo and v < ::addr_rng_hi`
+    # 0x6ffffe00: addr_rng_lo  # Values `v >= ::addr_rng_lo and v <= ::addr_rng_hi`
                                # use the 'd_ptr' field of the dynamic structure
     0x6ffffef5: gnu_hash
     0x6ffffef6: tlsdesc_plt
