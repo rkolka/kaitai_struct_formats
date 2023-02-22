@@ -1,8 +1,3 @@
-# http://www.stonedcoder.org/~kd/lib/MachORuntime.pdf
-# https://opensource.apple.com/source/python_modules/python_modules-43/Modules/macholib-1.5.1/macholib-1.5.1.tar.gz
-# https://github.com/comex/cs/blob/master/macho_cs.py
-# https://opensource.apple.com/source/Security/Security-55471/libsecurity_codesigning/requirements.grammar.auto.html
-# https://github.com/apple/darwin-xnu/blob/xnu-2782.40.9/bsd/sys/codesign.h
 meta:
   id: mach_o
   xref:
@@ -11,9 +6,18 @@ meta:
       - fmt/693 # Mach-O 64bit
     wikidata: Q2627217
   license: MIT
+  ks-version: 0.9
   imports:
     - /serialization/asn1/asn1_der
   endian: le
+doc-ref:
+  - https://www.stonedcoder.org/~kd/lib/MachORuntime.pdf
+  - https://opensource.apple.com/source/python_modules/python_modules-43/Modules/macholib-1.5.1/macholib-1.5.1.tar.gz
+  - https://github.com/comex/cs/blob/07a88f9/macho_cs.py
+  - https://opensource.apple.com/source/Security/Security-55471/libsecurity_codesigning/requirements.grammar.auto.html
+  - https://github.com/apple/darwin-xnu/blob/xnu-2782.40.9/bsd/sys/codesign.h
+  - https://opensource.apple.com/source/dyld/dyld-852/src/ImageLoaderMachO.cpp.auto.html
+  - https://opensource.apple.com/source/dyld/dyld-852/src/ImageLoaderMachOCompressed.cpp.auto.html
 seq:
   - id: magic
     type: u4be
@@ -567,21 +571,31 @@ types:
         pos: rebase_off
         size: rebase_size
         type: rebase_data
+        if: rebase_size != 0
       bind:
         io: _root._io
         pos: bind_off
         size: bind_size
         type: bind_data
+        if: bind_size != 0
+      weak_bind:
+        io: _root._io
+        pos: weak_bind_off
+        size: weak_bind_size
+        type: bind_data
+        if: weak_bind_size != 0
       lazy_bind:
         io: _root._io
         pos: lazy_bind_off
         size: lazy_bind_size
-        type: lazy_bind_data
+        type: bind_data
+        if: lazy_bind_size != 0
       exports:
         io: _root._io
         pos: export_off
         size: export_size
         type: export_node
+        if: export_size != 0
     types:
       rebase_data:
         seq:
@@ -655,12 +669,6 @@ types:
             value: "opcode_and_immediate & 0x0f"
             -webide-parse-mode: eager
       bind_data:
-        seq:
-          - id: items
-            type: bind_item
-            repeat: until
-            repeat-until: _.opcode == bind_opcode::done
-      lazy_bind_data:
         seq:
           - id: items
             type: bind_item
@@ -1107,7 +1115,7 @@ types:
           - id: value
             size: length
           - id: padding
-            size: 4 - (length & 3)
+            size: -length % 4
       match:
         -webide-representation: "{match_op} {data.value:str}"
         seq:
