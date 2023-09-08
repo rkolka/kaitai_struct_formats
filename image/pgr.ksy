@@ -114,29 +114,29 @@ types:
 
       - id: white_balance
         type: u4be
-        doc: Horizontal refresh rate
+        doc: White balance
 
       - id: bayer_gain
         type: u4be
-        doc: Horizontal refresh rate
+        doc: Bayer gain
 
       - id: bayer_map
         type: str
         size: 4
         encoding: UTF-8
-        doc: FourCC
+        doc: FourCC string of Bayer filter pattern
 
       - id: brightness
         type: u4be
-        doc: Horizontal refresh rate
+        doc: Brightness
 
       - id: gamma
         type: u4be
-        doc: Horizontal refresh rate
+        doc: Gamma
 
       - id: cam_serial_number
         type: u4be
-        doc: Horizontal refresh rate
+        doc: Camera Serial Number
 
       - id: shutter
         type: u4be
@@ -145,7 +145,7 @@ types:
 
       - id: pps_data
         type: pps_data_t
-        doc: Horizontal refresh rate
+        doc: Pulse per second data
 
       - id: reserved3
         size: 24
